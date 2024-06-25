@@ -20,8 +20,10 @@ public class LivrosService {
     LivrosRepository repository;
 
     public Livros create(LivrosDTO livrosDTO){
+        if(livrosDTO.titulo() == null || livrosDTO.descricao() == null || livrosDTO.genero()==null){
+            throw new IllegalArgumentException("O livro não pode conter dados nulos");
+        }
         Livros livro = new Livros();
-        Assert.notNull(livrosDTO.titulo(),"Titulo não pode ser nulo");
         BeanUtils.copyProperties(livrosDTO, livro);
         repository.save(livro);
         return livro;
@@ -32,9 +34,11 @@ public class LivrosService {
     }
 
     public Livros updLivro(LivrosDTO livrosDTO){
+        if(livrosDTO.titulo() == null || livrosDTO.descricao() == null || livrosDTO.genero()==null){
+            throw new IllegalArgumentException("O livro não pode conter dados nulos");
+        }
         Livros livro = new Livros();
         if(repository.findById(livrosDTO.id()).isPresent()){
-            Assert.notNull(livrosDTO.titulo(),"Título não pode ser nulo");
             BeanUtils.copyProperties(livrosDTO,livro);
             repository.save(livro);
             return livro;
@@ -52,7 +56,7 @@ public class LivrosService {
             return "Livro "+livro.getTitulo()+" foi removido";
         }
         else{
-            return "Livro não encontrado";
+            throw new RuntimeException("Livro não encontrado");
         }
     }
 }
