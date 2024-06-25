@@ -50,8 +50,8 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<User> delete(@Valid @RequestBody UserDTO userDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userDTO));
+    public ResponseEntity<String> delete(@Valid @RequestBody UserDTO userDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.delete(userDTO));
     }
 
 }
