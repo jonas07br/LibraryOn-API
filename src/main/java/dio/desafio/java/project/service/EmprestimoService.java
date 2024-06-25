@@ -31,7 +31,7 @@ public class EmprestimoService {
         checkDTO(emprestimoDTO);
         
         Emprestimos emprestimos = new Emprestimos();
-        if(repository.findByuserEmail(emprestimoDTO.userEmail()).size()>2){
+        if(repository.findByuserEmail(emprestimoDTO.userEmail()).size()>=2){
             throw new RuntimeException("Usuario possui mais de 2 emprestimos");
         }
         else{
@@ -56,13 +56,14 @@ public class EmprestimoService {
             return "Deletado";
         }
         else{
-            return "Emprestimo nao encontrado";
+            throw new RuntimeException("Emprestimo não encontrado");
         }
     }
 
     public List<Emprestimos> findall(){
         return repository.findAll();
     }
+    
     public void checkDTO(EmprestimoDTO emprestimoDTO){
         Optional<User> userTest = userRepository.findById(emprestimoDTO.userEmail());
         Optional<Livros> livroTest = livrosRepository.findById(emprestimoDTO.livroId());
