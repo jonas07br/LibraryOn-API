@@ -15,6 +15,8 @@ import dio.desafio.java.project.dto.UserDTO;
 import dio.desafio.java.project.model.User;
 import dio.desafio.java.project.repository.UserRepository;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.AssertTrue;
+import nonapi.io.github.classgraph.utils.Assert;
 
 @Service
 public class UserService {
@@ -23,8 +25,12 @@ public class UserService {
 
     public User saveUser(UserDTO userDTO){
         if(repository.findById(userDTO.email()).isPresent()){
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"Email invalido");
+            throw new RuntimeException("Email não disponivel");
         }
+        if(userDTO.name()==null || userDTO.password()==null){
+            throw new IllegalArgumentException("Nome ou senha estão nulos");
+        }
+        
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
         repository.save(user);
@@ -47,20 +53,20 @@ public class UserService {
             return user;
         }
         else{
-            throw new ResponseStatusException(HttpStatus.CONFLICT,"Email invalido");
+            throw new RuntimeException("Usuario não encontrado");
         }
         
     }
 
-    public void delete(UserDTO userDTO) {
+    public String delete(UserDTO userDTO) {
         if(repository.findById(userDTO.email()).isPresent()){
             User user = new User();
             BeanUtils.copyProperties(userDTO,user);
             repository.delete(user);
-            
+            return "Deletado";
         }
         else{
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Usuario inexistente");
+            throw new RuntimeException("Usuario não encontrado");
         }
     }
 
