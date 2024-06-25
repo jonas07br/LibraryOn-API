@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,29 +30,28 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/{email}")
-    public Optional<User> find(@PathVariable String email){
-        return userService.findUser(email);
+    public ResponseEntity<Optional<User>> find(@PathVariable String email){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findUser(email));
     }
+    
     @GetMapping("/findall")
-    public List<User> findall(){
-        return userService.findall();
+    public ResponseEntity<List<User>> findall(){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findall());
     }
+
     @PutMapping
-    public String updateuser(@RequestBody UserDTO userDTO){
-        userService.updateUser(userDTO);
-        return "Usuario "+userDTO.name()+" atualizado";
+    public ResponseEntity<User> updateuser(@RequestBody UserDTO userDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userDTO));
     }
 
     @PostMapping
-    public String create(@Valid @RequestBody UserDTO userDTO){
-        userService.saveUser(userDTO);
-        return "User salvo";
+    public ResponseEntity<User> create(@Valid @RequestBody UserDTO userDTO){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(userDTO));
     }
 
     @DeleteMapping
-    public String delete(@Valid @RequestBody UserDTO userDTO){
-        userService.delete(userDTO);
-        return "Usuario removido";
+    public ResponseEntity<User> delete(@Valid @RequestBody UserDTO userDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.updateUser(userDTO));
     }
 
 }

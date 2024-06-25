@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import dio.desafio.java.project.dto.UserDTO;
@@ -15,18 +16,19 @@ import dio.desafio.java.project.model.User;
 import dio.desafio.java.project.repository.UserRepository;
 import jakarta.validation.Valid;
 
-@Component
+@Service
 public class UserService {
     @Autowired
     UserRepository repository;
 
-    public void saveUser(UserDTO userDTO){
+    public User saveUser(UserDTO userDTO){
         if(repository.findById(userDTO.email()).isPresent()){
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Email invalido");
         }
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
         repository.save(user);
+        return user;
     }
 
     public Optional<User> findUser(String email){
@@ -37,12 +39,12 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void updateUser(UserDTO userDTO){
+    public User updateUser(UserDTO userDTO){
         if(repository.findById(userDTO.email()).isPresent()){
             User user = new User();
             BeanUtils.copyProperties(userDTO,user);
             repository.save(user);
-            
+            return user;
         }
         else{
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Email invalido");
