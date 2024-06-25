@@ -18,6 +18,7 @@ import org.springframework.web.service.annotation.PutExchange;
 import dio.desafio.java.project.dto.LivrosDTO;
 import dio.desafio.java.project.model.Livros;
 import dio.desafio.java.project.service.LivrosService;
+import feign.Response;
 
 @RestController
 @RequestMapping("/livros")
@@ -30,10 +31,9 @@ public class LivrosController {
         return ResponseEntity.status(HttpStatus.CREATED).body(livrosService.create(livrosDTO));
 
     }
-
     @GetMapping
-    public List<Livros> findAll(){
-        return livrosService.findAll();
+    public ResponseEntity<List<Livros>> findAll(){
+        return ResponseEntity.status(HttpStatus.OK).body(livrosService.findAll());
     }
 
     @PutMapping

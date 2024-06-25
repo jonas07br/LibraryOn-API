@@ -49,7 +49,7 @@ public class LivrosService {
         if(repository.findById(livrosDTO.id()).isPresent()){
             BeanUtils.copyProperties(livrosDTO, livro);
             repository.delete(livro);
-            return "Livro "+livro.getTitulo()+"removido";
+            return "Livro "+livro.getTitulo()+" foi removido";
         }
         else{
             return "Livro não encontrado";
