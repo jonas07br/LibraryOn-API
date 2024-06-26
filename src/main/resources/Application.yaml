@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: prod
   datasource:
     url: jdbc:postgresql://viaduct.proxy.rlwy.net:17324/railway
     username: postgres

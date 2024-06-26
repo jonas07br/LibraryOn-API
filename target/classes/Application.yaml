@@ -1,22 +1,4 @@
 spring:
-  profiles:
-    active: dev
-  application:
-    name: java.project
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: 'jdbc:postgresql://localhost:1212/libraryon'
-    username: postgres
-    password: postgre
----
-spring:
-  profiles:
-    active: prod
   datasource:
     url: jdbc:postgresql://viaduct.proxy.rlwy.net:17324/railway
     username: postgres
