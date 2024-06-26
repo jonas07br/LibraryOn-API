@@ -6,7 +6,10 @@ import java.util.OptionalInt;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,7 +24,10 @@ import nonapi.io.github.classgraph.utils.Assert;
 @Service
 public class UserService {
     @Autowired
-    UserRepository repository;
+    private UserRepository repository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     public User saveUser(UserDTO userDTO){
         if(repository.findById(userDTO.email()).isPresent()){
@@ -33,6 +39,8 @@ public class UserService {
         
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
+        String pass = user.getPassword();
+        user.setPassword(encoder.encode(pass));
         repository.save(user);
         return user;
     }
@@ -49,6 +57,8 @@ public class UserService {
         if(repository.findById(userDTO.email()).isPresent()){
             User user = new User();
             BeanUtils.copyProperties(userDTO,user);
+            String pass = user.getPassword();
+            user.setPassword(encoder.encode(pass));
             repository.save(user);
             return user;
         }
