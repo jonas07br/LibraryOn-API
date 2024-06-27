@@ -2,9 +2,9 @@ spring:
   profiles:
     active: prod
   datasource:
-    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
-    username: ${PGUSER}
-    password: ${PGPASSWORD}
+    url: jdbc:postgresql://viaduct.proxy.rlwy.net:17324/railway
+    username: postgres
+    password: JgcdWOiJlXXLDFcpdyYHbwdzsdUkwbZs
   jpa:
     open-in-view: false
     hibernate:
