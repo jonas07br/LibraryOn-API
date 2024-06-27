@@ -36,4 +36,10 @@ public class EmprestimoController {
     public ResponseEntity<String> delete(@RequestBody EmprestimoDTO emprestimoDTO){
         return ResponseEntity.status(HttpStatus.OK).body(service.delete(emprestimoDTO));
     }
+
+    @GetMapping("/pendentes")
+    public ResponseEntity<List<Emprestimos>> findpPending(){
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.findPending());
+    }
+
 }

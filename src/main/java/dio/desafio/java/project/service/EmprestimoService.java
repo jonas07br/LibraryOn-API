@@ -1,6 +1,7 @@
 package dio.desafio.java.project.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,5 +75,16 @@ public class EmprestimoService {
         if(livroTest.isEmpty()){
             throw new RuntimeException("Livro não encontrado.");
         }
+    }
+
+    public List<Emprestimos> findPending() {
+        List<Emprestimos> pending = new ArrayList<>();
+        List<Emprestimos> lista = repository.findAll(); 
+        for(Emprestimos e:lista){
+            if (e.getValidade().isAfter(LocalDate.now())){
+                pending.add(e);
+            }
+        }
+        return pending;
     }
 }
