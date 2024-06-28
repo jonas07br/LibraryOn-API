@@ -21,6 +21,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.AssertTrue;
 import nonapi.io.github.classgraph.utils.Assert;
 
+@SuppressWarnings("unused")
 @Service
 public class UserService {
     @Autowired

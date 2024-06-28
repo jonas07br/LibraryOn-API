@@ -14,6 +14,7 @@ import dio.desafio.java.project.dto.LivrosDTO;
 import dio.desafio.java.project.model.Livros;
 import dio.desafio.java.project.repository.LivrosRepository;
 
+@SuppressWarnings("unused")
 @Service
 public class LivrosService {
     @Autowired
