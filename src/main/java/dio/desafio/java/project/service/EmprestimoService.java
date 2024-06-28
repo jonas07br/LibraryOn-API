@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import dio.desafio.java.project.dto.EmprestimoDTO;
@@ -81,7 +82,7 @@ public class EmprestimoService {
         List<Emprestimos> pending = new ArrayList<>();
         List<Emprestimos> lista = repository.findAll(); 
         for(Emprestimos e:lista){
-            if (e.getValidade().isAfter(LocalDate.now())){
+            if (LocalDate.now().isAfter(e.getValidade())){
                 pending.add(e);
             }
         }
